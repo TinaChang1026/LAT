@@ -30,18 +30,20 @@ async function MS_TextSentimentAnalysis(thisEvent){
     let documents = [];
     documents.push(thisEvent.message.text);
     
-    const results = await analyticsClient.analyzeSentiment(documents);
+    const results = await analyticsClient.analyzeSentiment(documents, "zh-hant",{
+      includeOpinionMining:true
+    });
     console.log("[results] ", JSON.stringify(results));
 
     const sentimentScore = results[0].confidenceScores[results[0].sentiment];
     const sentimentText = results[0].sentiment === "positive" ? "正向" :
                           results[0].sentiment === "negative" ? "負向" :
                           "中性";
+    const mainOpinions = results[0].sentences[0].opinions[0].target.text;
 
     const echo = {
       type: 'text',
-      text: `${sentimentText}。分數： ${sentimentScore.toFixed(2)}`
-      
+      text: `${sentimentText}。分數： ${sentimentScore.toFixed(2)}  ( ${mainOpinions} )`
     };
 
     return client.replyMessage(thisEvent.replyToken, echo);
