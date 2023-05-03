@@ -36,13 +36,16 @@ async function MS_TextSentimentAnalysis(thisEvent){
     console.log("[results] ", JSON.stringify(results));
 
     const sentimentScore = results[0].confidenceScores[results[0].sentiment];
+    //將回覆的語言改成中文:
     const sentimentText = results[0].sentiment === "positive" ? "正向" :
                           results[0].sentiment === "negative" ? "負向" :
                           "中性";
+    //判斷重要的主詞
     const mainOpinions = results[0].sentences[0].opinions[0].target.text;
 
     const echo = {
       type: 'text',
+      //輸出評價、分數、主詞
       text: `${sentimentText}。分數： ${sentimentScore.toFixed(2)}  ( ${mainOpinions} )`
     };
 
