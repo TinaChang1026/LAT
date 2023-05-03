@@ -22,5 +22,6 @@
 
     改變原本的輸出為`${sentimentText}。分數： ${sentimentScore.toFixed(2)}  ( ${mainOpinions} )`
 
+Chatbot 互動截圖:
     
 ![Alt text](homework4.png)
